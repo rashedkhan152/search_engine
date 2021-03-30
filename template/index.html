@@ -1,0 +1,43 @@
+<form id="form" method="POST">
+    <input type="checkbox" id="keyword" name="" value="">
+    <label for="keyword">All Keywords</label><br>
+    <input type="checkbox" id="user" name="" value="">
+    <label for="keyword">All Users</label><br>
+    <input type="checkbox" id="time" name="" value="">
+    <label for="keyword">Time range</label><br>
+</form>
+
+<div id="output">
+
+</div>
+
+$('#form').on('submit', function(e){
+
+    e.preventDefault();
+    
+      $.ajax({
+           type : "POST", 
+           url: "{% url 'ajax_posting' %}",
+           data: {
+            all_keywords : $('#all_keywords').val(),
+            all_users : $('#all_users').val(),
+            time_range : $('#time_range').val(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+    
+           },
+           
+           success: function(data){
+              $('#output').html(data.msg) /* response message */
+           },
+    
+           failure: function() {
+               
+           }
+    
+    
+       });
+    
+    
+            });     
+    
